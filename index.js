@@ -7,24 +7,23 @@ app.use(bodyParser.json());
 
 // Ruta para recibir notificaciones del webhook
 app.post("/webhook-endpoint", async (req, res) => {
-  const webhookData = req.body;
-  const comentario = webhookData.comment.body;
-  const issueKey = webhookData.issue.key; 
-  console.log(`Nuevo Comentario: ${comentario}`);
-  res.status(200).send("Notificación recibida");
-  // Realiza acciones adicionales según tus necesidades
-
   try {
-    await axios({
-      method: "post",
-      url: "https://botproto.onrender.com/comment",
-      data: {
-        ticket: issueKey , 
-        comment: comentario
-      },
+    const webhookData = req.body;
+    const comentario = webhookData.comment.body;
+    const issueKey = webhookData.issue.key;
+
+    console.log(`Nuevo Comentario: ${comentario}`);
+
+    // Realiza acciones adicionales según tus necesidades
+
+    // Make the Axios request
+    const axiosResponse = await axios.post("https://botproto.onrender.com/comment", {
+      ticket: issueKey,
+      comment: comentario,
     });
 
-  
+    console.log("Axios Response:", axiosResponse.data);
+    res.status(200).send("Notificación recibida");
   } catch (error) {
     console.error("Error sending Axios request:", error);
     res.status(500).send("Internal Server Error");
