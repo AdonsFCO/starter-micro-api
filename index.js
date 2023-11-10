@@ -13,15 +13,12 @@ app.post("/webhook-endpoint", async (req, res) => {
   // Realiza acciones adicionales según tus necesidades
 
   try {
-    await axios({
-      method: "post",
-      url: "https://botproto.onrender.com/comment ",
-      data: {
-        ticket: webhookData.issue.key,
-        comment: comentario
-      },
+    const axiosResponse = await axios.post("https://botproto.onrender.com/comment", {
+      ticket: webhookData.issue.key,
+      comment: comentario, 
     });
 
+    console.log("Axios Response:", axiosResponse.data);
     res.status(200).send("Notificación recibida");
   } catch (error) {
     console.error("Error sending Axios request:", error);
