@@ -15,22 +15,18 @@ app.post("/webhook-endpoint", async (req, res) => {
     console.log(`Nuevo Comentario: ${comentario}`);
 
     // Make the Axios request
-axios({
+   await axios({
     method: 'post',
     url: 'https://botproto.onrender.com/comment',
     data: { 
-      comentario: comentario,
-      ticket: issueKey
+      comentario: comentario && "no",
+      ticket: issueKey && "nel pastel"
     }
   });
 
-    console.log("Axios Response:", axiosResponse.data);
-    res.status(200).send("Notificación recibida");
-  } catch (error) {
-    console.error("Error sending Axios request:", error);
-    res.status(500).send("Internal Server Error");
-  }
 });
+
+
 
 const puerto = process.env.PORT || 3000;
 app.listen(puerto, () => {
