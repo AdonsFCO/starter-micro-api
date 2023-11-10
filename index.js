@@ -15,10 +15,10 @@ app.post("/webhook-endpoint", async (req, res) => {
   try {
     await axios({
       method: "post",
-      url: "https://botproto.onrender.com/comment",
+      url: "https://botproto.onrender.com/comment ",
       data: {
         ticket: webhookData.issue.key,
-        comment: webhookData.body,
+        comment: comentario
       },
     });
 
